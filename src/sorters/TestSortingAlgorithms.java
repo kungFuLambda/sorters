@@ -1,6 +1,7 @@
 package sorters;
 
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TestSortingAlgorithms {
 
@@ -15,8 +16,11 @@ public class TestSortingAlgorithms {
 		Sorter merge = new MergeSort();
 		WorstCaseGenerator generator = new WorstCaseGenerator();		
 
-		
+		//get current path
+		Path currentRelativePath = Paths.get("");
+		String currentDir = currentRelativePath.toAbsolutePath().toString();
 
+		
 		//initialise arrays for sorts and files
 		Sorter[] runners = {quick,quickInsert,quickMedian,quickDutch,merge};
 		String[] files = {"int10.txt","int50.txt","int100.txt","int1000.txt","int20k.txt","int500k.txt","intBig.txt","dutch.txt"};
@@ -28,7 +32,7 @@ public class TestSortingAlgorithms {
 			//print and read file
 			printBigLine();
 			FileReader readA = new FileReader();
-			Integer[] a = readA.readFile(System.getProperty("user.dir")+"/Files/"+file);
+			Integer[] a = readA.readFile(currentDir+"/Files/"+file);
 			System.out.println("sorting on set:" + file);
 			printBigLine();
 			
@@ -56,13 +60,13 @@ public class TestSortingAlgorithms {
 		
 		printBigLine();
 		System.out.println("Worst case array targeting median of three:");
-		String compareFile = "int500k.txt";
+		String compareFile = "int20k.txt";
 		FileReader readA = new FileReader();
 		printBigLine();
 		
 		//generate arrays
-		Integer[] comparison = readA.readFile("C:\\Users\\Leont\\OneDrive\\Documents\\UNI\\CS\\year2\\ADS\\labs\\Files\\"+compareFile);
-		Integer[] worstArray = generator.generate(30000);
+		Integer[] comparison = readA.readFile(currentDir+"/Files/"+compareFile);
+		Integer[] worstArray = generator.generate(comparison.length);
 		
 		//print and run sorts.
 		System.out.print("base case: ");
